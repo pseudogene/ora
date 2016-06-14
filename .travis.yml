@@ -1,0 +1,12 @@
+language: perl
+perl:
+- '5.22'
+before_install:
+- sudo apt-get update -qq
+- sudo apt-get install -qq wget hmmer bioperl
+- wget ftp://ftp.ebi.ac.uk/pub/software/unix/fasta/executables/fasta-36.3.8-linux64.tar.gz
+- tar xfz fasta-36.3.8-linux64.tar.gz
+- sudo cp /fasta-36.3.8/bin/* /usr/local/bin/
+notifications:
+  slack:
+    secure: Qd4OUPJmqblNkmHQWF/h3xwjtgBmux+LeDR6BhEmgVCN8+mK6s6XF2CBU0SR4DoYXYE2JFCgNdOgRKuiGCSbrLlJjm4m932xUPVrvt65YbmJo7DcVcJdusYtLuXNPa3fYKaFM/g7ID3rno380WQy2ekjOxDg5PkftC/3UV4oimigz9J/UaGAHqKsuMWr/vtnJyEFRmYfZnP58QT5oEjVAFlIb0ix9DJoFlGb+5eme5Rxzj3yX+9ZPA6Y4ED2K+IIk60IluKLmQT30ZbVNkFDiu56gxXe3v6dI9o68+9mw08GIX4YWfPW+7pMR1RcRyZpa9G1vKgYFJ8jND5poLnwTsZFvtI94hCJ3sdbVU1iT1QWwtpVkk7tqXRS0bbbLvfzZdyXi7OgiHwdZRhG75fJFXbvNGCkxADloLgmyw8ZVMM9QVgRXLGN/oyTpX8jWB4S1/O9Fkjm3T0fL58nkUTCZJnLLEyQCVe7noBLtBAIztQHvvZdVpXZgOox9u/A/Bxk1B1KeJ0Jq954rcwROAnNo++PnGtPDzfCoF5NhemhlRDrx9ONr49s6nA0SksgjcKX6OsCSMKeDcVt5e28r5ffrkL6v85Tbc9b5+H1t/lUAdjA3RDQKvC39ByzmCUE+JKDlemJHYN1QxNPADpH/uK8F2RiQ+locPWF7jUfgmTj23w=

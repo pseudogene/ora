@@ -1,5 +1,5 @@
 This file contains message digests of all files listed in MANIFEST,
-signed via the Module::Signature module, version 0.70.
+signed via the Module::Signature module, version 0.80.
 
 To verify the content in this distribution, first make sure you have
 Module::Signature installed, then type:
@@ -14,36 +14,34 @@ not run its Makefile.PL or Build.PL.
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-SHA1 6698d83d57af721279e64aff85b3f2137abdde90 Build.PL
-SHA1 c299db91f71478907ac59c6dd41c243fa5f0bfc2 LICENSE
-SHA1 75b02ace0c27591f538a683ae6a0684f9e6bc40c MANIFEST
-SHA1 64330dbe73ff05839574a56fdd62e4bcc6a7bb55 META.json
-SHA1 ea6aee891db6f766b64f049d0f443ae09125792c META.yml
-SHA1 6bb5d93dda6911669b3513e97f661e2f45e4fcee Makefile.PL
-SHA1 07443b85651f263dc1f4b140b97a9ada37b976f1 README
-SHA1 62459daf1110950201247a6bd56639291500a4ff changes
-SHA1 a8857d1bb947eb79f691f7a06bca1e1dfc46547b lib/Bio/ORA.pm
-SHA1 7752bd38411a8da3a15b49b7cbf2008577cdd6ce lib/Bio/or.fasta
-SHA1 5e91a5d5f633cc48c9afe0f3a7163c0864bc34ea lib/Bio/or.hmm
-SHA1 c24ca0218a8bce73dcdf9946427a7adb1747ade8 lib/Bio/or.hmm.h3f
-SHA1 719223ca0bc015cb7e584d3e54f45b4f51fb8856 lib/Bio/or.hmm.h3i
-SHA1 87bfa0b4ce9ee3bb99183bd548144f5f94515590 lib/Bio/or.hmm.h3m
-SHA1 e49285fffad0acc38be046b471dfb5ab939def64 lib/Bio/or.hmm.h3p
+SHA1 f4cd95ec622e9511b10d0b5867d54c1e025b9129 CHANGES.md
+SHA1 a6adc13d0c809ab8cb68e6e3b6eb7571bd0e2920 LICENSE.md
+SHA1 2bd29060e063ad68a549f6072a087998f6f5a439 MANIFEST
+SHA1 8cc123e0c48e8e8cb7c10b2e359aa9b91713b32c Makefile.PL
+SHA1 d7fd53d64cec1ec287d1009961500dc560ac5871 README.md
+SHA1 3d84ddced84757d72f4144b65644c2b539bd75b6 lib/Bio/ORA.pm
 SHA1 7752bd38411a8da3a15b49b7cbf2008577cdd6ce scripts/or.fasta
 SHA1 5e91a5d5f633cc48c9afe0f3a7163c0864bc34ea scripts/or.hmm
-SHA1 c24ca0218a8bce73dcdf9946427a7adb1747ade8 scripts/or.hmm.h3f
-SHA1 719223ca0bc015cb7e584d3e54f45b4f51fb8856 scripts/or.hmm.h3i
-SHA1 87bfa0b4ce9ee3bb99183bd548144f5f94515590 scripts/or.hmm.h3m
-SHA1 e49285fffad0acc38be046b471dfb5ab939def64 scripts/or.hmm.h3p
-SHA1 1b868b61f50cbb58c65ac0dbefe0ed6e805b070a scripts/or.pl
+SHA1 1aaf970ef6ae1d8ab6b467976a5790a39aa66763 scripts/or.hmm.h3f
+SHA1 729d17b6deb4640a6d8f56c9640e257fd08b13a4 scripts/or.hmm.h3i
+SHA1 30cd761073a4b1a701dd9b8e838d7310b6db9b21 scripts/or.hmm.h3m
+SHA1 e2f4f0c01fa000cad9173d51380973b1104407a2 scripts/or.hmm.h3p
+SHA1 b373a50ed004d792193d73ca3ffd5dbd50d2f6f4 scripts/or.pl
+SHA1 f49a675751a1c512496da1dbd169416231fa629e t/test.t
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (Darwin)
+Version: GnuPG v1
 
-iQEcBAEBAgAGBQJR5TlSAAoJEOst2Cm/V064yaIH/Az0VgR4w8nMDkFNoRrYvNPB
-vlQpCa2kpSug48lXB0mxbrH/02AfcbhnKj8WZF9mTLQAhQim4HI/tb6/DOyGlkjv
-y1O6Evy39q0GKsBjL6iq8SJ4APAh3v9VtUCwMNZ5V8g/E8ycZ7b+Y/HxTZKCLmZ6
-jef28QUUrb+bLO8MtqWWi+hrZgUzOLniLLzmCVAd49AnhdqhcBaJ+sjUiuTOJJDl
-yTlWwVQGZurC79lEduxoh4MSW5xv4LV46GBuuqyR2jKIuDGd121KdXLC6z7ek/vW
-VAt0e2wKZ232FxxO7B5Ujx8jyIavx2xz1nne6ZoCQ6qkPUzVztDqB4cmGoIo6K8=
-=CqsH
+iQIcBAEBAgAGBQJXYCO/AAoJEEa2olXs2ZZ6ddYQAJpo2GKZtnSWooJpaQD/6l2S
+snMYFv6RWe3baPzPkI1J9D/mIAfyp1jR+hto+6lDpW1MMg0guy1tdojFL/RQJbaG
+Cfsr0p6t5iqvcdz1kQRCexN2hfbL/2TTQoy4sUoYoBKr1Y1Y/Rhl2u+ICeb1Znvv
+V7Ua8+tByUOTqUa9c99d2M+x6SWLaRdVpKJpZnF5UuOMNa/pynTZUUwPQzRe035J
+rO29wxzW50mWnBAbuuZSh01ZqDOm6wxtyAM9eOfOaIAnc24wVg392TajOVdaVD30
+ijLHqlDE1vj46K+X+4+fPsnS7kwxJClna0YdA1RLPywJsaoriTRustZTpRC9qwQA
+t+DnHrCVpGCL74ZR/0Mn/rYrjbvJX+QVvCORbXT5y8IyXUzdYJRsUoqVwPBIqH/p
+0YWyZci2NgoGSTQTUQEbu0YYb90q6j1Ovrqo9cbxh++PRdKU7nusjE6H6dvc5dpX
+VoukU8QIr2Rk5GY6Gv4EbmK/us1JaOyFZNwFGEYNBUUCGMC7WxdXlV6U8/SJjL/k
+79LMrEWvkaiRjV4peRtmCfEnkD+c0f9NlTYhoICyrIoI0BgsCTEvp9ZcV9q3uVBT
+9LamDCL1XVZpsf0jiz9Uw+ACPFTc/KSso+wJ+nAw2R4YdT2aZVJB4b8MDmF7ofEl
+YT/Z8DCkKBSJdQNuhRW6
+=nasK
 -----END PGP SIGNATURE-----
