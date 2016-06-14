@@ -1,7 +1,7 @@
-## $Id: ORA.pm,v 1.7 2009/07/11 12:19:38 Europe/Dublin $
+## $Id: ORA.pm,v 1.9 2013/04/22 14:34:35 Europe/Stirling $
 #
 # Olfactory Receptor Assigner (ORA)
-# Copyright 2007-2009 Bekaert M <michael@batlab.eu>
+# Copyright 2007-2013 Bekaert M <michael.bekaert@stir.ac.uk>
 #
 # This work is licensed under the Creative Commons Attribution-
 # Noncommercial-Share Alike 3.0 License. To view a copy of this
@@ -65,8 +65,8 @@ See Synopsis above for the object creation code.
 
 To use this module you may need:
  * Bioperl (L<http://www.bioperl.org/>) modules,
- * HMMER distribution (L<http://hmmer.janelia.org/>) and
- * FASTA distribution (L<ftp://ftp.ebi.ac.uk/pub/software/unix/fasta/>).
+ * HMMER v3 distribution (L<http://hmmer.janelia.org/>) and
+ * FASTA r56 distribution (L<ftp://ftp.ebi.ac.uk/pub/software/unix/fasta/>).
 
 =head1 FEEDBACK
 
@@ -75,14 +75,14 @@ your comments and suggestions preferably to author.
 
 =head1 AUTHOR
 
-B<Michael Bekaert> (michael@batlab.eu)
+B<Michael Bekaert> (michael.bekaert@stir.ac.uk)
 
 Address:
-     School of Biology & Environmental Science
-     University College Dublin
-     Belfield, Dublin 4
-     Dublin
-     Ireland
+     Institute of Aquaculture
+     University of Stirling
+     Stirling
+     Scotland, FK9 4LA
+     UK
 
 =head1 SEE ALSO
 
@@ -90,7 +90,7 @@ perl(1), bioperl web site
 
 =head1 LICENSE
 
-Copyright 2007-2009 - Michael Bekaert
+Copyright 2007-2013 - Michael Bekaert
 
 This work is licensed under the Creative Commons Attribution-
 Noncommercial-Share Alike 3.0 License. To view a copy of this
@@ -109,7 +109,6 @@ package Bio::ORA;
 use strict;
 use vars qw(@ISA $VERSION);
 use File::Temp qw/tempfile/;
-use Bio::Tools::HMMER::Results;
 use Bio::SeqIO;
 use Bio::Seq;
 use Bio::SearchIO;
@@ -117,7 +116,7 @@ use Bio::PrimarySeq;
 use Bio::PrimarySeqI;
 use Bio::Tools::CodonTable;
 
-$VERSION = '1.7';
+$VERSION = '1.9';
 @ISA     = qw(Bio::Root::Root Bio::Root::IO);
 
 # Default path
@@ -133,7 +132,7 @@ my $PATH_TMP = '/tmp';
  Returns : The full path to the executable.
  Args    : $exec (mandatory) executable to be find.
 
-=cut                       
+=cut
 
 sub _findexec
 {
@@ -170,7 +169,7 @@ sub new
     $self->{'_pfam'} =
       ((defined $ENV{'HMMERDIR'})
         ? $ENV{'HMMERDIR'}
-        : Bio::ORA->_findexec('hmmpfam'));
+        : BIO::ORA->_findexec('hmmscan'));
     $seqobj->throw(
                "die in _initialize, ORA.pm works only on PrimarySeqI objects\n")
       unless ($seqobj->isa("Bio::PrimarySeqI"));
@@ -287,34 +286,40 @@ sub _what_or
     eval
     {
         my $hmmer =
-          new Bio::Tools::HMMER::Results(-file => $filename . '.report',
-                                         -type => 'hmmpfam');
-        foreach my $domain ($hmmer->each_Domain)
-        {
-            $self->{'_hmmor'} = (
+           Bio::SearchIO->new(-file => $filename . '.report',
+                                         -format => 'hmmer');
+while( my $result = $hmmer->next_result ) {
+        while( my $hit = $result->next_hit ) {
+            while( my $hsp = $hit->next_hsp ) {
+
+           $self->{'_hmmor'} = (
                                  [
-                                  $domain->evalue,
-                                  $domain->hmmname,
-                                  substr($domain->seq_id, 0, 1),
-                                  $domain->bits,
-                                  $domain->start,
-                                  $domain->end,
+                                  $hsp->evalue(),
+                                  $hit->name,
+                                  substr($result->query_name(), 0, 1),
+                                  $hsp->score(),
+                                  $hsp->start('query'),
+                                  $hsp->end('query'),
                                   (
                                    ($strand != 0)
                                    ? $strand
-                                   : ((length($domain->seq_id) > 1) ? -1 : 1)
+                                   : ((length($result->query_name()) > 1) ? -1 : 1)
                                   )
                                  ]
                                 )
               if (!defined $self->{'_hmmor'}[0]
-                  || $domain->evalue < $self->{'_hmmor'}[0]);
-            $best = $domain->evalue
-              if ((!defined $best) || $domain->evalue < $best);
-            $second = $domain->evalue
-              if ($domain->evalue > $best
-                  && (!defined $second || $domain->evalue < $second));
+                  || $hsp->evalue() < $self->{'_hmmor'}[0]);
+            $best = $hsp->evalue()
+              if ((!defined $best) || $hsp->evalue() < $best);
+            $second = $hsp->evalue()
+              if ($hsp->evalue() > $best
+                  && (!defined $second || $hsp->evalue() < $second));
+
+
+            }
         }
-        $self->{'_hmmor'}[7] = $second
+    }
+       $self->{'_hmmor'}[7] = $second
           if (defined $best && defined $self->{'_hmmor'}[0]);
     };
     unlink($filename);
@@ -393,7 +398,7 @@ sub _find_orf
                 $dna                = $2;
                 $stopcodon          = $6;
             }
-            else 
+            else
             {
                 $dna = substr(
                            $seq,
@@ -520,7 +525,7 @@ sub getHits
     my $fasta =
       ((defined $ENV{'FASTADIR'})
         ? $ENV{'FASTADIR'}
-        : $self->_findexec('tfasta34_t'));
+        : $self->_findexec('tfasta36'));
     my @hits;
     if ((defined $seq) && (-x $fasta))
     {
@@ -621,7 +626,7 @@ sub fastScan
     my $fasta =
       ((defined $ENV{'FASTADIR'})
         ? $ENV{'FASTADIR'}
-        : $self->_findexec('fastx34_t'));
+        : $self->_findexec('fastx36'));
     my @hits;
     if ((defined $seqfile) && (-x $fasta))
     {
@@ -793,6 +798,7 @@ sub show
             print "//\n";
         }
         elsif ( $out eq 'tbl' ) {    # 'Feature Table' output (for tbl2asn, NCBI)
+            my $organism = shift(@args);
             print '>Feature ', $self->{'_seqref'}->display_id, "\n";
             print '<', 1 , "\t>", $self->{'_seqref'}->length(), "\tgene\n";
             print "\t\t\tgene\t", $self->{'_result'}[5], "\n";
@@ -806,7 +812,7 @@ sub show
                 print "\t\t\tproduct\t", $self->{'_result'}[4], "\n";
             }
             print "\n";
-            print STDERR "\n>", $self->{'_seqref'}->display_id, ' [organism=unknown] ', $self->{'_result'}[4], " gene member, partial cds.\n";
+            print STDERR "\n>", $self->{'_seqref'}->display_id, ' [organism=',(defined $organism ? $organism : 'Unknown'),'] ', $self->{'_result'}[4], " gene member, partial cds.\n";
             my $i = 0;
             my $dna = $self->{'_seqref'}->seq();
             while ( length( $dna ) > ( $i * 80 ) ) { print STDERR substr( $dna, ( $i++ * 80 ), 80 ), "\n"; }
@@ -916,13 +922,13 @@ sub _translation
         {
             for (my $k = 0 ; $k < 4 ; $k++)
             {
-                $var[$var_i++] = $table[$i] 
+                $var[$var_i++] = $table[$i]
                   . $table[$j]
                   . $table[$k]
                   if $myCodonTable->is_start_codon(
                                             $table[$i] . $table[$j] . $table[$k]
                   );
-                $var2[$var2_i++] = $table[$i] 
+                $var2[$var2_i++] = $table[$i]
                   . $table[$j]
                   . $table[$k]
                   if $myCodonTable->is_ter_codon(

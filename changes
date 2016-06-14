@@ -1,0 +1,12 @@
+[Changes for 1.9 - Mon Apr 22 14:34:35 GMT 2013]
+
+* Fix HMMer parser. Removed bioperl warnings
+* Update parsers to accept HMMER v2 and v3 distributions
+  Edit the HMM files to run with hmmscan rather than hmmpfam
+* Update Fasta search to run with the last stable version v56
+
+
+[Changes for 1.7 - Sat Jul 11 12:19:38 GMT 2009]
+
+* Fix result output (GenBank and XML) format
+

@@ -3,8 +3,8 @@ use Module::Build;
 my $build = Module::Build->new
     ( module_name     => 'Bio::ORA',
       dist_name       => 'ora',
-      dist_version    => 1.7,
-      dist_author     => 'Michael Bekaert <michael@batlab.eu>',
+      dist_version    => 1.9,
+      dist_author     => 'Michael Bekaert <michael.bekaert@stir.ac.uk>',
       dist_abstract   => 'Olfactory Receptor family Assigner (ORA)',
       license         => 'gpl',
       requires        => {
@@ -16,10 +16,15 @@ my $build = Module::Build->new
                          },
       script_files     => { 'scripts/or.pl' => 'or.pl',
                             'scripts/or.fasta' => 'or.fasta',
-                            'scripts/or.hmm' => 'or.hmm'
+                            'scripts/or.hmm' => 'or.hmm',
+                            'scripts/or.hmm.h3f' => 'or.hmm.h3f',
+                            'scripts/or.hmm.h3i' => 'or.hmm.h3i',
+                            'scripts/or.hmm.h3m' => 'or.hmm.h3m',
+                            'scripts/or.hmm.h3p' => 'or.hmm.h3p'
       	                 },
       sign          => 1,
       create_readme => 1,
+      create_makefile_pl => 'traditional',
       auto_features => {
         manpage_support => {
           description => "Create Unix man pages",

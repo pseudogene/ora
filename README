@@ -49,24 +49,24 @@ DRIVER SCRIPT
 
 REQUIREMENTS
     To use this module you may need: * Bioperl (http://www.bioperl.org/)
-    modules, * HMMER distribution (http://hmmer.janelia.org/) and * FASTA
-    distribution (ftp://ftp.ebi.ac.uk/pub/software/unix/fasta/).
+    modules, * HMMER v3 distribution (http://hmmer.janelia.org/) and * FASTA
+    r56 distribution (ftp://ftp.ebi.ac.uk/pub/software/unix/fasta/).
 
 FEEDBACK
     User feedback is an integral part of the evolution of this modules. Send
     your comments and suggestions preferably to author.
 
 AUTHOR
-    Michael Bekaert (michael@batlab.eu)
+    Michael Bekaert (michael.bekaert@stir.ac.uk)
 
-    Address: School of Biology & Environmental Science University College
-    Dublin Belfield, Dublin 4 Dublin Ireland
+    Address: Institute of Aquaculture University of Stirling Stirling
+    Scotland, FK9 4LA UK
 
 SEE ALSO
     perl(1), bioperl web site
 
 LICENSE
-    Copyright 2007-2009 - Michael Bekaert
+    Copyright 2007-2013 - Michael Bekaert
 
     This work is licensed under the Creative Commons Attribution-
     Noncommercial-Share Alike 3.0 License. To view a copy of this license,
@@ -79,7 +79,6 @@ APPENDIX
     Internal methods are usually preceded with a _
 
   _findexec
-
      Title   : _findexec
      Usage   : my $path = $self->_findexec( $exec );
      Function: Find an executable file in the $PATH.
@@ -87,7 +86,6 @@ APPENDIX
      Args    : $exec (mandatory) executable to be find.
 
   new
-
      Title   : new
      Usage   : my $nb = Bio::ORA->new( $seqobj, $table, $aug, $hmm );
      Function: Initialize ORA object.
@@ -100,7 +98,6 @@ APPENDIX
                  ./oaz.hmm.
 
   find
-
      Title   : find
      Usage   : my $bool = $ORI_obj->find( $evalue, $strand, $start, $end );
      Function: Identify an olfactory receptor protein.
@@ -115,7 +112,6 @@ APPENDIX
                  the sequence length.
 
   _what_or
-
      Title   : _what_or
      Usage   : my $bool = $self->_what_oaz( $strand );
      Function: Use HMM profiles to identify an olfactory receptor gene.
@@ -124,7 +120,6 @@ APPENDIX
                (1 direct, -1 reverse or 0 both). Default is 0.
 
   _find_orf
-
      Title   : _find_orf
      Usage   : my $bool = $self->_find_or( $strand, $start, $end );
      Function: Retrieve the olfactory receptor ORF.
@@ -135,7 +130,6 @@ APPENDIX
                $end (mandatory) coordinate of the last nucleotide.
 
   getHits
-
      Title   : getHits
      Usage   : my @hits = Bio::ORA->getHits( $seq, $evalue, $ref );
      Function: Quick localization of ORs (use FASTA).
@@ -146,7 +140,6 @@ APPENDIX
                  look at ./or.fasta.
 
   fastScan
-
      Title   : fastScan
      Usage   : my @hits = Bio::ORA->fastScan( $seq, $ref );
      Function: Quick localization of ORs (use FASTA).
@@ -156,7 +149,6 @@ APPENDIX
                  look at ./or.fasta.
 
   show
-
      Title   : show
      Usage   : $ORA_obj->show( $outstyle );
      Function: Print result in various style.
@@ -164,7 +156,6 @@ APPENDIX
      Args    : $outstyle (mandatory) 'fasta', 'genbank', 'cvs', 'xml' or 'R' style.
 
   _translation
-
      Title   : _translation
      Usage   : my ( $start, $end ) = $self->_translation();
      Function: format initiation and stop codons for regex.

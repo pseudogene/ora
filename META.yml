@@ -1,23 +1,27 @@
 ---
-name: ora
-version: 1.7
+abstract: 'Olfactory Receptor family Assigner (ORA)'
 author:
-  - 'Michael Bekaert <michael@batlab.eu>'
-abstract: Olfactory Receptor family Assigner (ORA)
-license: gpl
-resources:
-  license: http://www.opensource.org/licenses/gpl-license.php
+  - 'Michael Bekaert <michael.bekaert@stir.ac.uk>'
+build_requires: {}
+configure_requires:
+  Module::Build: 0.40
+dynamic_config: 1
+generated_by: 'Module::Build version 0.4003, CPAN::Meta::Converter version 2.120921'
+license: open_source
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: ora
+provides:
+  Bio::ORA:
+    file: lib/Bio/ORA.pm
+    version: 1.9
 requires:
   Bio::Root::Version: 0
   Cwd: 0
   Getopt::Long: 0
   IO::File: 0
-  perl: 5.6.1
-provides:
-  Bio::ORA:
-    file: lib/Bio/ORA.pm
-    version: 1.7
-generated_by: Module::Build version 0.2808
-meta-spec:
-  url: http://module-build.sourceforge.net/META-spec-v1.2.html
-  version: 1.2
+  perl: v5.6.1
+resources:
+  license: http://opensource.org/licenses/gpl-license.php
+version: 1.9

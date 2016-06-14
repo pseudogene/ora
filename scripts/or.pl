@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 #
 # Olfactory Receptor family Assigner (ORA)
-# Copyright 2007-2009 Bekaert M <michael@batlab.eu>
+# Copyright 2007-2013 Bekaert M <michael.bekaert@stir.ac.uk>
 #
 # This work is licensed under the Creative Commons Attribution-
 # Noncommercial-Share Alike 3.0 License. To view a copy of this
@@ -15,13 +15,13 @@ use Bio::SeqIO;
 use Bio::ORA;
 
 #----------------------------------------
-my $version = '1.7';
+my $version = '1.9';
 my $hmm     = getcwd() . '/or.hmm';
 my $ref     = getcwd() . '/or.fasta';
 
 #----------------------------------------------------------
 sub hmm_disc {
-    my ( $seq, $name, $id, $translate, $evalue, $format, $detail, $aug, $hmm, $filter, $frag, $subset ) = @_;
+    my ( $seq, $name, $id, $translate, $evalue, $format, $detail, $aug, $hmm, $filter, $frag, $subset, $organism ) = @_;
     my $chrom;
     if    ( defined $name )            { $chrom = $name . '_' . $id; }
     elsif ( defined $seq->display_id ) { $chrom = $seq->display_id; }
@@ -34,13 +34,13 @@ sub hmm_disc {
             my $out = new Bio::SeqIO( '-format' => 'fasta', '-file' => ">>$subset" );
             $out->write_seq($seq);
         }
-        $ORA_obj->show($format, $detail);
+        $ORA_obj->show($format, $detail, $organism);
     }
     return $ORA_obj->{'_verbose'};
 }
 
 sub fasta_filter {
-    my ( $seq, $ref, $id, $translate, $evalue, $format, $detail, $aug, $hmm, $filter, $frag, $subset ) = @_;
+    my ( $seq, $ref, $id, $translate, $evalue, $format, $detail, $aug, $hmm, $filter, $frag, $subset, $organism ) = @_;
     my $mess = '* FASTA search for ' . $seq->display_id . "\n";
     my @hits = Bio::ORA->getHits( $seq, 1, $ref );
     if ( $#hits >= 0 ) {
@@ -58,7 +58,7 @@ sub fasta_filter {
                     my $out = new Bio::SeqIO( '-format' => 'fasta', '-file' => ">>$subset" );
                     $out->write_seq($seq_or);
                 }
-                $ORA_obj->show($format, $detail);
+                $ORA_obj->show($format, $detail, $organism);
             }
             $mess .= ' ' . $ORA_obj->{'_verbose'};
         }
@@ -69,9 +69,9 @@ sub fasta_filter {
 }
 
 #------------------------ Main ----------------------------
-my ( $infile, $translate, $name, $filter, $subset, $aug, $resume );
+my ( $infile, $translate, $name, $filter, $subset, $aug, $frag, $resume, $organism );
 my ( $evalue, $contigs, $verbose, $detail, $format, $out ) = ( 1e-10, 0, 0, 0, 'fasta', 1 );
-GetOptions( 'sequence:s' => \$infile, 'c!' => \$contigs, 'a!' => \$aug, 'format:s' => \$format, 'expect:f' => \$evalue, 'name:s' => \$name, 'table:i' => \$translate, 'filter:i' => \$filter, 'sub:s' => \$subset, 'resume:s' => \$resume, 'd!' => \$detail, 'v!' => \$verbose, 'size:i' => \$frag );
+GetOptions( 'sequence:s' => \$infile, 'organism:s' => \$organism, 'c!' => \$contigs, 'a!' => \$aug, 'format:s' => \$format, 'expect:f' => \$evalue, 'name:s' => \$name, 'table:i' => \$translate, 'filter:i' => \$filter, 'sub:s' => \$subset, 'resume:s' => \$resume, 'd!' => \$detail, 'v!' => \$verbose, 'size:i' => \$frag );
 $format = lc $format;
 if ( ( defined $infile ) && ( -r $infile ) && ( !( defined $translate ) || ( ( defined $translate ) && ( $translate =~ /([1-9]|1[1-6]|2(1|2))/ ) ) ) && ( !( defined $filter ) || ( ( defined $filter ) && ( $filter =~ /^\d+$/ ) ) ) && ( $format =~ /^fasta|genbank|csv|r|tbl$/ ) ) {
     $translate = 1 unless ( defined $translate );
@@ -81,16 +81,16 @@ if ( ( defined $infile ) && ( -r $infile ) && ( !( defined $translate ) || ( ( d
         my $id = 0;
         my @prehits = Bio::ORA->fastScan( $infile, $ref );
         if ( ($#prehits >= 0) && (my $inseq = Bio::SeqIO->new( '-file' => "<$infile", '-format' => 'fasta' ) ) ) {
-            print STDERR $#prehits, " Informative contigs\n" if ($verbose); 
-            my $myresume = shift(@prehits); 
+            print STDERR $#prehits, " Informative contigs\n" if ($verbose);
+            my $myresume = shift(@prehits);
             while ( my $seq = $inseq->next_seq ) {
             	my $mess;
                 next if (!(defined $myresume) || ($myresume ne $seq->display_id));
                 $myresume = shift(@prehits);
                 next if ( (defined $resume) && !$id && ($resume ne $seq->display_id) );
 	            $id++;
-                if ( length( $seq->seq() ) > 2500 ) { $mess = fasta_filter( $seq, $ref, $id, $translate, $evalue, $format, $detail, $aug, $hmm, $filter, $frag, $subset ); }
-                else                                { $mess = hmm_disc( $seq, $name, $id, $translate, $evalue, $format, $detail, $aug, $hmm, $filter, $frag, $subset ); }
+                if ( length( $seq->seq() ) > 2500 ) { $mess = fasta_filter( $seq, $ref, $id, $translate, $evalue, $format, $detail, $aug, $hmm, $filter, $frag, $subset, $organism ); }
+                else                                { $mess = hmm_disc( $seq, $name, $id, $translate, $evalue, $format, $detail, $aug, $hmm, $filter, $frag, $subset, $organism ); }
                 print STDERR $mess if($verbose && defined $mess);
             }
         }
@@ -101,8 +101,8 @@ if ( ( defined $infile ) && ( -r $infile ) && ( !( defined $translate ) || ( ( d
         	my $mess;
             next if ( (defined $resume) && !$id && ($resume ne $seq->display_id) );
             $id++;
-            if ( length( $seq->seq() ) > 2500 ) { $mess = fasta_filter( $seq, $ref, $id, $translate, $evalue, $format, $detail, $aug, $hmm, $filter, $frag, $subset ); }
-            else                                { $mess = hmm_disc( $seq, $name, $id, $translate, $evalue, $format, $detail, $aug, $hmm, $filter, $frag, $subset ); }
+            if ( length( $seq->seq() ) > 2500 ) { $mess = fasta_filter( $seq, $ref, $id, $translate, $evalue, $format, $detail, $aug, $hmm, $filter, $frag, $subset, $organism ); }
+            else                                { $mess = hmm_disc( $seq, $name, $id, $translate, $evalue, $format, $detail, $aug, $hmm, $filter, $frag, $subset, $organism ); }
             print STDERR $mess if($verbose && defined $mess);
         }
     } else {
