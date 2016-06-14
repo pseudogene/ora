@@ -1,0 +1,14 @@
+MANIFEST
+README
+LICENSE
+Build.PL
+Makefile.PL
+lib/Bio/ORA.pm
+lib/Bio/or.fasta
+lib/Bio/or.hmm
+scripts/or.pl
+scripts/or.fasta
+scripts/or.hmm
+t/001_load.t
+META.yml
+SIGNATURE    Added here by Module::Build

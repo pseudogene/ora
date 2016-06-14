@@ -1,0 +1,40 @@
+This file contains message digests of all files listed in MANIFEST,
+signed via the Module::Signature module, version 0.55.
+
+To verify the content in this distribution, first make sure you have
+Module::Signature installed, then type:
+
+    % cpansign -v
+
+It will check each file's integrity, as well as the signature's
+validity.  If "==> Signature verified OK! <==" is not displayed,
+the distribution may already have been compromised, and you should
+not run its Makefile.PL or Build.PL.
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+SHA1 086e22ac2f87fdc9c1c7978182293e202452fbe3 Build.PL
+SHA1 c299db91f71478907ac59c6dd41c243fa5f0bfc2 LICENSE
+SHA1 2f3ab0d77c6a4742d6aa813d37fc46956b369e62 MANIFEST
+SHA1 c2ace3f717da7288df51013c4c5ffef8ab4598b3 META.yml
+SHA1 e86245b6a930636e230cc7607c02cdabe7d1e2fc Makefile.PL
+SHA1 1f62d50a3455ca65cbe608b027232be121bfbebd README
+SHA1 787f865fc0cc97890fd17998c1e682cd0c668907 lib/Bio/ORA.pm
+SHA1 5cb265e5201aee0203bcac4a48130558279cdf2e lib/Bio/or.fasta
+SHA1 2d113e5ea178ad09f557973435667fd70d486b24 lib/Bio/or.hmm
+SHA1 5cb265e5201aee0203bcac4a48130558279cdf2e scripts/or.fasta
+SHA1 2d113e5ea178ad09f557973435667fd70d486b24 scripts/or.hmm
+SHA1 b296f83e8b4fff4a9e62438e20dc98f73f7cbab7 scripts/or.pl
+SHA1 357e653f578d0ba882f9e9b465de1696848e412c t/001_load.t
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (Darwin)
+
+iQEcBAEBAgAGBQJJR7BRAAoJEDwSwQj6QMVpJpEH/0pL0k0BnaDk3w4O0yq1TYeF
+d0WPbxiRvP1HkHlJIA9ZyTYM+Nwx85XHKMaqmvr/yNWczrTv/rJJ2+fc/2/C1LHg
+HXZUCm2pIoDlHQ/+X94/cZsmCYPuhsSMGmjTsOYnCLir13eBU6PIq4iomrt6yTN/
+4y6tN1hX+x76jR31I1wsHoJ+HGaozjbUanssJu5doQqs0RAyaz/nhyHTCTQC2b4L
+3sCKQsh3gPnnBOmG0p5PO1Flr331yxwLGWi8tY5pwByM6/qQLf8gumwWF0xDVKsI
+Btg/t28vuh/H+xDWMLpsR+3nmmN0Cn+FREvmIl5NHZ/3p/Gu7o+L5Yd5uJcUsj4=
+=rMRe
+-----END PGP SIGNATURE-----
