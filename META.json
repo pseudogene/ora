@@ -16,7 +16,7 @@
    "prereqs" : {
       "configure" : {
          "requires" : {
-            "Module::Build" : "0.40"
+            "Module::Build" : "0.4"
          }
       },
       "runtime" : {
@@ -32,7 +32,7 @@
    "provides" : {
       "Bio::ORA" : {
          "file" : "lib/Bio/ORA.pm",
-         "version" : "1.9"
+         "version" : "v1.9.1"
       }
    },
    "release_status" : "stable",
@@ -41,5 +41,5 @@
          "http://opensource.org/licenses/gpl-license.php"
       ]
    },
-   "version" : "1.9"
+   "version" : "v1.9.1"
 }

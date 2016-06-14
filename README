@@ -31,13 +31,13 @@ DESCRIPTION
     See Synopsis above for the object creation code.
 
 DRIVER SCRIPT
-      #!/usr/bin/perl -w
+      #!/usr/bin/perl
       use strict;
-
+      use warnings;
       use Bio::Seq;
-      use Bio:ORA;
+      use Bio::ORA;
 
-      my $inseq = Bio::SeqIO->new( '-file' => "< $yourfile", -format => 'fasta' );
+      my $inseq = Bio::SeqIO->new( '-file' => '<' . $ARGV[0], -format => 'fasta' );
       while (my $seq = $inseq->next_seq) {
         my $ORA_obj = Bio::ORA->new( $seq );
         if ( $ORA_obj->find() ) {

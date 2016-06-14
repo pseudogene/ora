@@ -3,10 +3,11 @@ use Module::Build;
 my $build = Module::Build->new
     ( module_name     => 'Bio::ORA',
       dist_name       => 'ora',
-      dist_version    => 1.9,
+      dist_version    => '1.9.1',
       dist_author     => 'Michael Bekaert <michael.bekaert@stir.ac.uk>',
       dist_abstract   => 'Olfactory Receptor family Assigner (ORA)',
       license         => 'gpl',
+      configure_requires => { 'Module::Build' => 0.40 },
       requires        => {
                             'perl'                      => '5.6.1',
                             'Bio::Root::Version'        => 0,

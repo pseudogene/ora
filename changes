@@ -1,3 +1,8 @@
+[Changes for 1.9.1 - Tue Jul 16 14:34:35 GMT 2013]
+
+* Fix function spelling error
+
+
 [Changes for 1.9 - Mon Apr 22 14:34:35 GMT 2013]
 
 * Fix HMMer parser. Removed bioperl warnings

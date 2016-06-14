@@ -4,7 +4,7 @@ author:
   - 'Michael Bekaert <michael.bekaert@stir.ac.uk>'
 build_requires: {}
 configure_requires:
-  Module::Build: 0.40
+  Module::Build: 0.4
 dynamic_config: 1
 generated_by: 'Module::Build version 0.4003, CPAN::Meta::Converter version 2.120921'
 license: open_source
@@ -15,7 +15,7 @@ name: ora
 provides:
   Bio::ORA:
     file: lib/Bio/ORA.pm
-    version: 1.9
+    version: v1.9.1
 requires:
   Bio::Root::Version: 0
   Cwd: 0
@@ -24,4 +24,4 @@ requires:
   perl: v5.6.1
 resources:
   license: http://opensource.org/licenses/gpl-license.php
-version: 1.9
+version: v1.9.1

@@ -15,7 +15,7 @@ use Bio::SeqIO;
 use Bio::ORA;
 
 #----------------------------------------
-my $version = '1.9';
+my $version = '1.9.1';
 my $hmm     = getcwd() . '/or.hmm';
 my $ref     = getcwd() . '/or.fasta';
 

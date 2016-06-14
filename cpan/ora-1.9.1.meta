@@ -1,0 +1,45 @@
+{
+   "abstract" : "Olfactory Receptor family Assigner (ORA)",
+   "author" : [
+      "Michael Bekaert <michael.bekaert@stir.ac.uk>"
+   ],
+   "dynamic_config" : 1,
+   "generated_by" : "Module::Build version 0.4003, CPAN::Meta::Converter version 2.120921",
+   "license" : [
+      "open_source"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "ora",
+   "prereqs" : {
+      "configure" : {
+         "requires" : {
+            "Module::Build" : "0.4"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Bio::Root::Version" : "0",
+            "Cwd" : "0",
+            "Getopt::Long" : "0",
+            "IO::File" : "0",
+            "perl" : "v5.6.1"
+         }
+      }
+   },
+   "provides" : {
+      "Bio::ORA" : {
+         "file" : "lib/Bio/ORA.pm",
+         "version" : "v1.9.1"
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "license" : [
+         "http://opensource.org/licenses/gpl-license.php"
+      ]
+   },
+   "version" : "v1.9.1"
+}

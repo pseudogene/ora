@@ -1,4 +1,4 @@
-## $Id: ORA.pm,v 1.9 2013/04/22 14:34:35 Europe/Stirling $
+## $Id: ORA.pm,v 1.9.1 2013/07/16 14:34:35 Europe/Stirling $
 #
 # Olfactory Receptor Assigner (ORA)
 # Copyright 2007-2013 Bekaert M <michael.bekaert@stir.ac.uk>
@@ -45,13 +45,13 @@ See Synopsis above for the object creation code.
 
 =head1 DRIVER SCRIPT
 
-  #!/usr/bin/perl -w
+  #!/usr/bin/perl
   use strict;
-
+  use warnings;
   use Bio::Seq;
-  use Bio:ORA;
+  use Bio::ORA;
 
-  my $inseq = Bio::SeqIO->new( '-file' => "< $yourfile", -format => 'fasta' );
+  my $inseq = Bio::SeqIO->new( '-file' => '<' . $ARGV[0], -format => 'fasta' );
   while (my $seq = $inseq->next_seq) {
     my $ORA_obj = Bio::ORA->new( $seq );
     if ( $ORA_obj->find() ) {
@@ -116,7 +116,7 @@ use Bio::PrimarySeq;
 use Bio::PrimarySeqI;
 use Bio::Tools::CodonTable;
 
-$VERSION = '1.9';
+$VERSION = '1.9.1';
 @ISA     = qw(Bio::Root::Root Bio::Root::IO);
 
 # Default path
@@ -169,7 +169,7 @@ sub new
     $self->{'_pfam'} =
       ((defined $ENV{'HMMERDIR'})
         ? $ENV{'HMMERDIR'}
-        : BIO::ORA->_findexec('hmmscan'));
+        : Bio::ORA->_findexec('hmmscan'));
     $seqobj->throw(
                "die in _initialize, ORA.pm works only on PrimarySeqI objects\n")
       unless ($seqobj->isa("Bio::PrimarySeqI"));
