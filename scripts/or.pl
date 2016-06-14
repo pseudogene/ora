@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 #
 # Olfactory Receptor family Assigner (ORA)
-# Copyright 2007-2008 Bekaert M <michael@batlab.eu>
+# Copyright 2007-2009 Bekaert M <michael@batlab.eu>
 #
 # This work is licensed under the Creative Commons Attribution-
 # Noncommercial-Share Alike 3.0 License. To view a copy of this
@@ -10,16 +10,14 @@ use strict;
 use Getopt::Long;
 use File::Basename;
 use Cwd;
-use Term::ProgressBar;
 use Bio::Seq;
 use Bio::SeqIO;
 use Bio::ORA;
 
 #----------------------------------------
-my $version = '1.5';
+my $version = '1.7';
 my $hmm     = getcwd() . '/or.hmm';
 my $ref     = getcwd() . '/or.fasta';
-
 
 #----------------------------------------------------------
 sub hmm_disc {
@@ -71,9 +69,9 @@ sub fasta_filter {
 }
 
 #------------------------ Main ----------------------------
-my ( $infile, $translate, $name, $filter, $subset, $aug, $resume, $frag, $progress, $maxseq );
-my ( $evalue, $contigs, $bar, $verbose, $detail, $format, $out, $seqcount, $next_update ) = ( 1e-10, 0, 0, 0, 0, 'fasta', 1, 0 ,0 );
-GetOptions( 'sequence:s' => \$infile, 'c!' => \$contigs, 'a!' => \$aug, 'format:s' => \$format, 'expect:f' => \$evalue, 'name:s' => \$name, 'table:i' => \$translate, 'filter:i' => \$filter, 'sub:s' => \$subset, 'resume:s' => \$resume, 'd!' => \$detail, 'v!' => \$verbose, 'size:i' => \$frag, 'p!' => \$bar );
+my ( $infile, $translate, $name, $filter, $subset, $aug, $resume );
+my ( $evalue, $contigs, $verbose, $detail, $format, $out ) = ( 1e-10, 0, 0, 0, 'fasta', 1 );
+GetOptions( 'sequence:s' => \$infile, 'c!' => \$contigs, 'a!' => \$aug, 'format:s' => \$format, 'expect:f' => \$evalue, 'name:s' => \$name, 'table:i' => \$translate, 'filter:i' => \$filter, 'sub:s' => \$subset, 'resume:s' => \$resume, 'd!' => \$detail, 'v!' => \$verbose, 'size:i' => \$frag );
 $format = lc $format;
 if ( ( defined $infile ) && ( -r $infile ) && ( !( defined $translate ) || ( ( defined $translate ) && ( $translate =~ /([1-9]|1[1-6]|2(1|2))/ ) ) ) && ( !( defined $filter ) || ( ( defined $filter ) && ( $filter =~ /^\d+$/ ) ) ) && ( $format =~ /^fasta|genbank|csv|r|tbl$/ ) ) {
     $translate = 1 unless ( defined $translate );
@@ -84,61 +82,35 @@ if ( ( defined $infile ) && ( -r $infile ) && ( !( defined $translate ) || ( ( d
         my @prehits = Bio::ORA->fastScan( $infile, $ref );
         if ( ($#prehits >= 0) && (my $inseq = Bio::SeqIO->new( '-file' => "<$infile", '-format' => 'fasta' ) ) ) {
             print STDERR $#prehits, " Informative contigs\n" if ($verbose); 
-##    
-    if ($bar) {
-       $progress = Term::ProgressBar->new({name => 'Search', count => $#prehits, ETA => 'linear', term_width=>80 } );
-       $progress->max_update_rate(1);
-       $maxseq = $#prehits;
-       $seqcount = -1;
-    }
-##  
             my $myresume = shift(@prehits); 
             while ( my $seq = $inseq->next_seq ) {
             	my $mess;
                 next if (!(defined $myresume) || ($myresume ne $seq->display_id));
                 $myresume = shift(@prehits);
-                $next_update = $progress->update($seqcount) if($bar && (++$seqcount > $next_update) && $id);
                 next if ( (defined $resume) && !$id && ($resume ne $seq->display_id) );
 	            $id++;
                 if ( length( $seq->seq() ) > 2500 ) { $mess = fasta_filter( $seq, $ref, $id, $translate, $evalue, $format, $detail, $aug, $hmm, $filter, $frag, $subset ); }
                 else                                { $mess = hmm_disc( $seq, $name, $id, $translate, $evalue, $format, $detail, $aug, $hmm, $filter, $frag, $subset ); }
-                $progress->message($mess) if($bar && $verbose && (defined $mess));
-                print STDERR $mess if(!$bar && $verbose && (defined $mess));
+                print STDERR $mess if($verbose && defined $mess);
             }
         }
     } elsif ( my $inseq = Bio::SeqIO->new( '-file' => "<$infile", '-format' => 'fasta' ) ) {
-##    
-    if ($bar) {
-       open IN, $infile;
-       while(<IN>) {
-         $seqcount++ if(/^>/);
-       }
-       close IN;
-       $progress = Term::ProgressBar->new({name => 'Search', count => $seqcount, ETA => 'linear', term_width=>80 } );
-       $progress->max_update_rate(1);
-       $maxseq = $seqcount;
-       $seqcount = -1;
-    }
-##  
         $out--;
         my $id = 0;
         while ( my $seq = $inseq->next_seq ) {
         	my $mess;
-	        $next_update = $progress->update($seqcount) if($bar && (++$seqcount > $next_update) && $id);
             next if ( (defined $resume) && !$id && ($resume ne $seq->display_id) );
             $id++;
             if ( length( $seq->seq() ) > 2500 ) { $mess = fasta_filter( $seq, $ref, $id, $translate, $evalue, $format, $detail, $aug, $hmm, $filter, $frag, $subset ); }
             else                                { $mess = hmm_disc( $seq, $name, $id, $translate, $evalue, $format, $detail, $aug, $hmm, $filter, $frag, $subset ); }
-            $progress->message($mess) if($bar && $verbose && (defined $mess));
-            print STDERR $mess if(!$bar && $verbose && (defined $mess));
+            print STDERR $mess if($verbose && defined $mess);
         }
-        $progress->update($maxseq) if($bar && ($maxseq >= $next_update));
     } else {
         print STDERR "FATAL: Incorrect file format.\n";
     }
-    print STDERR "\n" if ($bar || $verbose);
+    print STDERR "\n" if ($verbose);
 } else {
-    print STDERR "\n..:: Olfactory Receptor Assigner (ORA) ::..\n> Standalone program version $version <\n\nFATAL: Incorrect arguments.\nUsage: or.pl [-options] --sequence=<sequence file>\n\n Options\n   -a\n         Force the use of alternative start codons, according to the\n         current genetic code. Otherwise, ATG is the only initiation codon\n         allow.\n   --expect\n         Set the E-value threshold. This setting specifies the statistical\n         significance threshold for reporting matches against database\n         sequences. The default value (1e-10).\n   --format\n         Available output format codes include 'fasta' (FASTA format);\n         'csv' (Comma-separated values); 'genbank' (GenBank format);\n         'R' (Direct output for R).\n         By default the fasta format is used.\n   --filter\n         Show ONLY the selected family number.\n   --sub\n         Extact the sequences of the Fasta hits.\n   --resume\n         Resume the search from given sequence name.\n   --name\n         Overwrite the sequence name by the provided one. Otherwise the\n         program will use the sequence name from as input.\n   --table\n         Force a genetic code to be used for the translation of the query.\n   --size\n         Filter fragments over the specified size as functional.\n   -d\n         Print all sequence details.\n   -v\n         Print more possibly useful stuff, such as the individual scores\n         for each sequence.\n\n";
+    print STDERR "\n..:: Olfactory Receptor Assigner (ORA) ::..\n> Standalone program version $version <\n\nFATAL: Incorrect arguments.\nUsage: or.pl [-options] --sequence=<sequence file>\n\n Options\n   -a\n         Force the use of alternative start codons, according to the\n         current genetic code. Otherwise, ATG is the only initiation codon\n         allow.\n   --expect\n         Set the E-value threshold. This setting specifies the statistical\n         significance threshold for reporting matches against database\n         sequences. The default value (1e-10).\n   --format\n         Available output format codes include 'fasta' (FASTA format);\n         'csv' (Comma-separated values); 'genbank' (GenBank format);\n         'R' (Direct output for R).\n         By default the fasta format is used.\n   -c\n         When using a large number of contigs (e.g. newly sequenced\n         genome), proceed to an inital FASTA search to identify the\n         contigs where to run the actual ORA search.\n   --filter\n         Show ONLY the selected family number.\n   --sub\n         Extact the sequences of the Fasta hits.\n   --resume\n         Resume the search from given sequence name.\n   --name\n         Overwrite the sequence name by the provided one. Otherwise the\n         program will use the sequence name from as input.\n   --table\n         Force a genetic code to be used for the translation of the query.\n   --size\n         Filter fragments over the specified size as functional.\n   -d\n         Print all sequence details.\n   -v\n         Print more possibly useful stuff, such as the individual scores\n         for each sequence.\n\n";
     $out++;
 }
 exit($out);

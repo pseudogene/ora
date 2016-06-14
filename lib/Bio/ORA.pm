@@ -1,17 +1,16 @@
-## $Id: ORA.pm,v 1.5 2008/12/15 10:26:38 Europe/Dublin $
+## $Id: ORA.pm,v 1.7 2009/07/11 12:19:38 Europe/Dublin $
 #
-# Olfactory Receptor family Assigner (ORA)
-# Copyright 2007-2008 Bekaert M <michael@batlab.eu>
+# Olfactory Receptor Assigner (ORA)
+# Copyright 2007-2009 Bekaert M <michael@batlab.eu>
 #
-# This work is licensed under a Creative Commons GNU General Public
-# License License (GPL). To view a copy of this license,
-# visit http://creativecommons.org/licenses/GPL/2.0/
-# 
+# This work is licensed under the Creative Commons Attribution-
+# Noncommercial-Share Alike 3.0 License. To view a copy of this
+# license, visit http://creativecommons.org/licenses/by-nc-sa/3.0/
 # POD documentation - main docs before the code
 
 =head1 NAME
 
-Bio::ORA - Olfactory Receptor family Assigner (ORA)
+Bio::ORA - Olfactory Receptor family Assigner (bioperl module)
 
 =head1 SYNOPSIS
 
@@ -20,9 +19,6 @@ Receptor gene. HMM profiles are used in order to identify location, frame
 and orientation of such gene.
 
 Creating the ORA object, eg:
-
-  use Bio::ORA;
-  use Bio::SeqIO;
 
   my $inputstream = Bio::SeqIO->new( -file => 'seqfile', -format => 'fasta' );
   my $seqobj = $inputstream->next_seq();
@@ -37,7 +33,6 @@ Display result in genbank format, eg:
 
   $ORA_obj->show( 'genbank' );
 
-
 =head1 DESCRIPTION
 
 Bio::ORA is a featherweight object for identifying mammalian
@@ -48,14 +43,13 @@ sequence, no intron supported.
 
 See Synopsis above for the object creation code.
 
-
 =head1 DRIVER SCRIPT
 
   #!/usr/bin/perl -w
   use strict;
 
   use Bio::Seq;
-  use Bio::ORA;
+  use Bio:ORA;
 
   my $inseq = Bio::SeqIO->new( '-file' => "< $yourfile", -format => 'fasta' );
   while (my $seq = $inseq->next_seq) {
@@ -67,7 +61,6 @@ See Synopsis above for the object creation code.
     }
   }
 
-
 =head1 REQUIREMENTS
 
 To use this module you may need:
@@ -75,16 +68,10 @@ To use this module you may need:
  * HMMER distribution (L<http://hmmer.janelia.org/>) and
  * FASTA distribution (L<ftp://ftp.ebi.ac.uk/pub/software/unix/fasta/>).
 
-
-=head1 MORE
-ORA home page is now L<http://ora.batlab.eu/>
-
-
 =head1 FEEDBACK
 
 User feedback is an integral part of the evolution of this modules. Send
 your comments and suggestions preferably to author.
-
 
 =head1 AUTHOR
 
@@ -97,29 +84,30 @@ Address:
      Dublin
      Ireland
 
-
-=head1 COPYRIGHT
-
-This work is licensed under a Creative Commons GNU General Public
-License License (GPL). The full text of the license can be
-found in the LICENSE file included with this module.
-
-
 =head1 SEE ALSO
 
-perl(1), fasta, hmmer and bioperl web sites
+perl(1), bioperl web site
 
+=head1 LICENSE
+
+Copyright 2007-2009 - Michael Bekaert
+
+This work is licensed under the Creative Commons Attribution-
+Noncommercial-Share Alike 3.0 License. To view a copy of this
+license, visit L<http://creativecommons.org/licenses/by-nc-sa/3.0/>
+or send a letter to Creative Commons, 543 Howard Street, 5th
+Floor, San Francisco, California, 94105, USA
 
 =head1 APPENDIX
 
 The rest of the documentation details each of the object methods. Internal
 methods are usually preceded with a _
 
-
 =cut
 
 package Bio::ORA;
 use strict;
+use vars qw(@ISA $VERSION);
 use File::Temp qw/tempfile/;
 use Bio::Tools::HMMER::Results;
 use Bio::SeqIO;
@@ -129,17 +117,13 @@ use Bio::PrimarySeq;
 use Bio::PrimarySeqI;
 use Bio::Tools::CodonTable;
 
-BEGIN {
-    use vars qw($VERSION @ISA $PATH_REF $PATH_HMM $PATH_TMP);
-    $VERSION     = '1.5';
-    @ISA         = qw(Bio::Root::Root Bio::Root::IO);
+$VERSION = '1.7';
+@ISA     = qw(Bio::Root::Root Bio::Root::IO);
 
-    # Default path
-    $PATH_REF = './or.fasta';
-    $PATH_HMM = './or.hmm';
-    $PATH_TMP = '/tmp';
-}
-
+# Default path
+my $PATH_REF = './or.fasta';
+my $PATH_HMM = './or.hmm';
+my $PATH_TMP = '/tmp';
 
 =head2 _findexec
 
@@ -220,7 +204,7 @@ sub new
  Function: Identify an olfactory receptor protein.
  Returns : boolean.
  Args    : $evalue (optional) set the E-value (expected) threshold.
-             Default is 1e-40,
+             Default is 1e-30,
            $strand(optional) strand where search should be done (1 direct,
              -1 reverse or 0 both). Default is 0,
            $start (optional) coordinate of the first nucleotide. Useful
@@ -234,7 +218,7 @@ sub find
 {
     my ($self, @args) = @_;
     my ($evalue, $strand, $start, $end) = @args;
-    $self->{'_evalue'} = ((defined $evalue) && ($evalue > 0)) ? $evalue : 1e-40;
+    $self->{'_evalue'} = ((defined $evalue) && ($evalue > 0)) ? $evalue : 1e-30;
     $strand = 0 unless ((defined $strand) && ($strand == 1 || $strand == -1));
     $start = 1 unless ((defined $start) && $start > 1);
     $end = $self->{'_seqref'}->length
@@ -536,7 +520,7 @@ sub getHits
     my $fasta =
       ((defined $ENV{'FASTADIR'})
         ? $ENV{'FASTADIR'}
-        : Bio::ORA->_findexec('tfasta34_t'));
+        : $self->_findexec('tfasta34_t'));
     my @hits;
     if ((defined $seq) && (-x $fasta))
     {
@@ -547,7 +531,7 @@ sub getHits
                . $ref . ' '
                . $filename . '> '
                . $filename
-               . '.report');
+               . '.report') == 0 or return;
         eval
         {
             my $in = new Bio::SearchIO(-format => 'fasta',
@@ -571,8 +555,8 @@ sub getHits
             }
         };
         unlink($filename . '.report');
-        unlink($filename);
     }
+    unlink($filename);
     if ($#hits >= 0)
     {
         @hits = sort @hits;
@@ -592,8 +576,8 @@ sub getHits
                 if (
                     (defined $hits[$i + 1])
                     && (
-                        (abs($hitstart_n - $hitend) < 1000)
-                        || (abs($hitstart - $hitend_n) < 1000)
+                        (abs($hitstart_n - $hitend) < 500)
+                        || (abs($hitstart - $hitend_n) < 500)
                         || ( ($hitstart_n < $hitend) && ($hitstart_n > $hitstart) )
                         || ( ($hitend_n < $hitend) && ($hitend_n > $hitstart) )
                         || ( ($hitstart < $hitend_n) && ($hitstart > $hitstart_n) )
@@ -615,14 +599,13 @@ sub getHits
     return @hits;
 }
 
-=head2 getHits
+=head2 fastScan
 
- Title   : getHits
- Usage   : my @hits = Bio::ORA->getHits( $seq, $evalue, $ref );
+ Title   : fastScan
+ Usage   : my @hits = Bio::ORA->fastScan( $seq, $ref );
  Function: Quick localization of ORs (use FASTA).
  Returns : Array of hits start/stop positions.
  Args    : $seq (mandatory) primarySeqI object (dna or rna),
-           $evalue (mandatory) det the E-value threshold,
            $ref (optional) path to fasta reference file, by default ORA
              look at ./or.fasta.
 
@@ -638,7 +621,7 @@ sub fastScan
     my $fasta =
       ((defined $ENV{'FASTADIR'})
         ? $ENV{'FASTADIR'}
-        : Bio::ORA->_findexec('fastx34_t'));
+        : $self->_findexec('fastx34_t'));
     my @hits;
     if ((defined $seqfile) && (-x $fasta))
     {
@@ -646,18 +629,20 @@ sub fastScan
                . ' -b 1 -d 1 -E 1 -H -Q '
                . $seqfile . ' '
                . $ref . '> '
-               . $filename );
+               . $filename ) == 0 or return;
         eval
         {
             my $in = new Bio::SearchIO(-format => 'fasta',
                                        -file => $filename);
+            my $last;
             while (my $result = $in->next_result)
             {
-                push( @hits, $result->query_name() );
+                push( @hits, $result->query_name() ) if (!defined $last || $last ne $result->query_name() );
+                $last = $result->query_name();
             }
         };
-        unlink($filename);
     }
+    unlink($filename);
     return @hits;
 }
 
@@ -950,4 +935,5 @@ sub _translation
     return (join('|', @var), join('|', @var2));
 }
 
+# and that's all the module
 1;

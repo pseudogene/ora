@@ -8,7 +8,6 @@ MAP   yes
 COM   hmmbuild -f OR3.aln.hmm ../alignments/OR3.aln
 COM   hmmcalibrate --seed 0 OR3.aln.hmm
 NSEQ  21
-DATE  Tue Jun  6 07:10:09 2006
 CKSUM 622
 XT      -8455     -4  -1000  -1000  -8455     -4  -8455     -4 
 NULT      -4  -8455
@@ -988,7 +987,6 @@ MAP   yes
 COM   hmmbuild -f OR11.aln.hmm ../alignments/OR11.aln
 COM   hmmcalibrate --seed 0 OR11.aln.hmm
 NSEQ  108
-DATE  Tue Jun  6 07:10:14 2006
 CKSUM 7958
 XT      -8455     -4  -1000  -1000  -8455     -4  -8455     -4 
 NULT      -4  -8455
@@ -1971,7 +1969,6 @@ MAP   yes
 COM   hmmbuild -f OR14.aln.hmm ../alignments/OR14.aln
 COM   hmmcalibrate --seed 0 OR14.aln.hmm
 NSEQ  229
-DATE  Tue Jun  6 07:10:15 2006
 CKSUM 5869
 XT      -8455     -4  -1000  -1000  -8455     -4  -8455     -4 
 NULT      -4  -8455
@@ -2945,7 +2942,6 @@ MAP   yes
 COM   hmmbuild -f OR51.aln.hmm ../alignments/OR51.aln
 COM   hmmcalibrate --seed 0 OR51.aln.hmm
 NSEQ  289
-DATE  Tue Jun  6 07:10:15 2006
 CKSUM 5720
 XT      -8455     -4  -1000  -1000  -8455     -4  -8455     -4 
 NULT      -4  -8455
@@ -3901,7 +3897,6 @@ MAP   yes
 COM   hmmbuild -f OR52.aln.hmm ../alignments/OR52.aln
 COM   hmmcalibrate --seed 0 OR52.aln.hmm
 NSEQ  353
-DATE  Mon Jun 23 10:04:28 2008
 CKSUM 7490
 XT      -8455     -4  -1000  -1000  -8455     -4  -8455     -4 
 NULT      -4  -8455
@@ -4923,7 +4918,6 @@ MAP   yes
 COM   hmmbuild -f OR55.aln.hmm ../alignments/OR55.aln
 COM   hmmcalibrate --seed 0 OR55.aln.hmm
 NSEQ  10
-DATE  Tue Jun  6 07:10:16 2006
 CKSUM 4806
 XT      -8455     -4  -1000  -1000  -8455     -4  -8455     -4 
 NULT      -4  -8455
@@ -5879,7 +5873,6 @@ MAP   yes
 COM   hmmbuild -f OR56.aln.hmm ../alignments/OR56.aln
 COM   hmmcalibrate --seed 0 OR56.aln.hmm
 NSEQ  82
-DATE  Tue Jun  6 07:10:16 2006
 CKSUM 5761
 XT      -8455     -4  -1000  -1000  -8455     -4  -8455     -4 
 NULT      -4  -8455
@@ -6799,7 +6792,6 @@ MAP   yes
 COM   hmmbuild -f OR1.aln.hmm ../alignments/OR1.aln
 COM   hmmcalibrate --seed 0 OR1.aln.hmm
 NSEQ  182
-DATE  Mon Jun 23 10:04:20 2008
 CKSUM 7165
 XT      -8455     -4  -1000  -1000  -8455     -4  -8455     -4 
 NULT      -4  -8455
@@ -7842,7 +7834,6 @@ MAP   yes
 COM   hmmbuild -f OR2.aln.hmm ../alignments/OR2.aln
 COM   hmmcalibrate --seed 0 OR2.aln.hmm
 NSEQ  537
-DATE  Tue Jun  6 07:10:09 2006
 CKSUM 5026
 XT      -8455     -4  -1000  -1000  -8455     -4  -8455     -4 
 NULT      -4  -8455
@@ -8873,7 +8864,6 @@ MAP   yes
 COM   hmmbuild -f OR4.aln.hmm ../alignments/OR4.aln
 COM   hmmcalibrate --seed 0 OR4.aln.hmm
 NSEQ  615
-DATE  Tue Jun  6 07:10:10 2006
 CKSUM 9258
 XT      -8455     -4  -1000  -1000  -8455     -4  -8455     -4 
 NULT      -4  -8455
@@ -9871,7 +9861,6 @@ MAP   yes
 COM   hmmbuild -f OR5.aln.hmm ../alignments/OR5.aln
 COM   hmmcalibrate --seed 0 OR5.aln.hmm
 NSEQ  593
-DATE  Mon Jun 23 10:04:24 2008
 CKSUM 5138
 XT      -8455     -4  -1000  -1000  -8455     -4  -8455     -4 
 NULT      -4  -8455
@@ -10977,7 +10966,6 @@ MAP   yes
 COM   hmmbuild -f OR6.aln.hmm ../alignments/OR6.aln
 COM   hmmcalibrate --seed 0 OR6.aln.hmm
 NSEQ  357
-DATE  Mon Jun 23 10:04:25 2008
 CKSUM 5730
 XT      -8455     -4  -1000  -1000  -8455     -4  -8455     -4 
 NULT      -4  -8455
@@ -12065,7 +12053,6 @@ MAP   yes
 COM   hmmbuild -f OR7.aln.hmm ../alignments/OR7.aln
 COM   hmmcalibrate --seed 0 OR7.aln.hmm
 NSEQ  345
-DATE  Mon Jun 23 10:04:25 2008
 CKSUM 8657
 XT      -8455     -4  -1000  -1000  -8455     -4  -8455     -4 
 NULT      -4  -8455
@@ -12976,7 +12963,6 @@ MAP   yes
 COM   hmmbuild -f OR8.aln.hmm ../alignments/OR8.aln
 COM   hmmcalibrate --seed 0 OR8.aln.hmm
 NSEQ  272
-DATE  Mon Jun 23 10:04:25 2008
 CKSUM 426
 XT      -8455     -4  -1000  -1000  -8455     -4  -8455     -4 
 NULT      -4  -8455
@@ -13992,7 +13978,6 @@ MAP   yes
 COM   hmmbuild -f OR9.aln.hmm ../alignments/OR9.aln
 COM   hmmcalibrate --seed 0 OR9.aln.hmm
 NSEQ  135
-DATE  Mon Jun 23 10:04:25 2008
 CKSUM 4611
 XT      -8455     -4  -1000  -1000  -8455     -4  -8455     -4 
 NULT      -4  -8455
@@ -14984,7 +14969,6 @@ MAP   yes
 COM   hmmbuild -f OR10.aln.hmm ../alignments/OR10.aln
 COM   hmmcalibrate --seed 0 OR10.aln.hmm
 NSEQ  393
-DATE  Mon Jun 23 10:04:26 2008
 CKSUM 6502
 XT      -8455     -4  -1000  -1000  -8455     -4  -8455     -4 
 NULT      -4  -8455
@@ -15997,7 +15981,6 @@ MAP   yes
 COM   hmmbuild -f OR12.aln.hmm ../alignments/OR12.aln
 COM   hmmcalibrate --seed 0 OR12.aln.hmm
 NSEQ  32
-DATE  Tue Jun  6 07:10:14 2006
 CKSUM 1766
 XT      -8455     -4  -1000  -1000  -8455     -4  -8455     -4 
 NULT      -4  -8455
@@ -16959,7 +16942,6 @@ MAP   yes
 COM   hmmbuild -f OR13.aln.hmm ../alignments/OR13.aln
 COM   hmmcalibrate --seed 0 OR13.aln.hmm
 NSEQ  230
-DATE  Tue Jun  6 07:10:15 2006
 CKSUM 3544
 XT      -8455     -4  -1000  -1000  -8455     -4  -8455     -4 
 NULT      -4  -8455

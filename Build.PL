@@ -3,17 +3,16 @@ use Module::Build;
 my $build = Module::Build->new
     ( module_name     => 'Bio::ORA',
       dist_name       => 'ora',
-      dist_version    => 1.5,
+      dist_version    => 1.7,
       dist_author     => 'Michael Bekaert <michael@batlab.eu>',
       dist_abstract   => 'Olfactory Receptor family Assigner (ORA)',
       license         => 'gpl',
       requires        => {
                             'perl'                      => '5.6.1',
-                            'Bio::Root::Version'        => '1.5.2',
+                            'Bio::Root::Version'        => 0,
                             'Getopt::Long'              => 0,
                             'IO::File'                  => 0,
-                            'Cwd'                       => 0,
-                            'Term::ProgressBar'         => 0
+                            'Cwd'                       => 0
                          },
       script_files     => { 'scripts/or.pl' => 'or.pl',
                             'scripts/or.fasta' => 'or.fasta',
