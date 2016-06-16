@@ -1,4 +1,8 @@
 use ExtUtils::MakeMaker;
+
+system('hmmpress -f scripts/or.hmm') == 0
+        or die "HMMER v3+ is not installed: $?";
+
 WriteMakefile
 (
     NAME => 'Bio::ORA',

@@ -80,7 +80,7 @@ See Synopsis above for the object creation code.
 To use this module you may need:
  * Bioperl (L<http://bioperl.org/>) modules,
  * HMMER v3+ distribution (L<http://hmmer.org/>) and
- * FASTA 36+ distribution (L<ftp://ftp.ebi.ac.uk/pub/software/unix/fasta/>).
+ * FASTA 36+ distribution (L<https://github.com/wrpearson/fasta36/>).
 
 =head1 LOCAL ADAPTATION
 

@@ -7,27 +7,27 @@ Olfactory Receptor family Assigner (ORA) [bioperl module].
 ## Description
 Bio::ORA is a featherweight object for identifying mammalian olfactory receptor genes. The sequences should not be longer than 40kb. The returned array include location, sequence and statistic for the putative olfactory receptor gene. Fully functional with DNA and EST sequence, no intron supported.
 
-##Associated publication
+## Associated publication
 
 >**A cluster of olfactory receptor genes linked to frugivory in bats**
->
 >Hayden S, Bekaert M, Goodbla A, Murphy WJ, Dávalos LM, Teeling EC.
->
->_Mol Biol Evol_. 2014 Apr;31(4):917-27. [doi: [10.1093/molbev/msu043](http://dx.doi.org/10.1093/molbev/msu043)].
+>_Mol Biol Evol_. 2014 Apr;31(4):917-27.
 
-##How to use this repository?
+[![DOI](https://img.shields.io/badge/DOI-10.1093%2Fmolbev%2Fmsu043-blue.svg)](http://dx.doi.org/10.1093/molbev/msu043)
+
+## How to use this repository?
 
 This repository host both the scripts and tools developed by this study. Feel free to adapt the scripts and tools, but remember to cite their authors!
 
 To look at our scripts and raw results, **browse** through this repository. If you want to reproduce our results you will need to **clone** this repository, build the docker, and the run all the scripts. If you want to use our data for our own research, **fork** this repository and **cite** the authors.
 
 
-##Requiements
+## Requiements
 To use this module you may need:
 
  *  [Bioperl](http://bioperl.org/) modules,
  *  [HMMER v3+](http://hmmer.org/) distribution and
- *  [FASTA 36+](ftp://ftp.ebi.ac.uk/pub/software/unix/fasta/) distribution.
+ *  [FASTA 36+](https://github.com/wrpearson/fasta36) distribution.
 
 
 ## Installation
@@ -148,7 +148,7 @@ while (my $seq = $inseq->next_seq) {
 }
 ```
 
-###Local adaptations
+### Local adaptations
 This module uses three softwares. If HMMER or FASTA are updated make sure that HMMER's hmmscan and FASTA's tfastx36 and fastx36 still exists under same name. You change the call my editing the "Default softwares" section of `or.pm`.
 
 ```
@@ -164,7 +164,7 @@ Similarly, updates of HMMER may require to update the HMM indexes. Run `hmmpress
 hmmpress -f /usr/local/bin/or.hmm
 ```
 
-##Issues
+## Issues
 
 If you have any problems with or questions about the scripts, please contact us through a [GitHub issue](https://github.com/pseudogene/ora/issues).
 Any issue related to the scientific results themselves must be done directly with the authors.
